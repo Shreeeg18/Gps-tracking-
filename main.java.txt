@@ -1,0 +1,41 @@
+package com.example.mapsapi2;
+
+import android.content.ContentValues;
+import android.os.Bundle;
+import android.os.Environment;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import org.osmdroid.config.Configuration;
+import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
+import org.osmdroid.views.MapView;
+import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
+
+import java.io.File;
+
+public class MainActivity extends AppCompatActivity {
+
+    private MapView mapView;
+
+    // Initialize the osmdroid library
+    //Configuration.getInstance().setUserAgentValue(BuildConfig."com.example.mapsapi2");
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main); // Assuming you have a layout with the MapView
+
+        // Initialize the osmdroid library
+        Configuration.getInstance().setUserAgentValue("mapsapi2"); // Replace with your app's name
+        Configuration.getInstance().setOsmdroidBasePath(new File(Environment.getExternalStorageDirectory(), "osmdroid"));
+        Configuration.getInstance().setOsmdroidTileCache(new File(Environment.getExternalStorageDirectory(), "osmdroid/op"));
+        Configuration.getInstance().setOsmdroidTileCache(new File(Environment.getExternalStorageDirectory(), "osmdroid"));
+
+        
+        // Create and configure the MapView
+        MapView mapView = findViewById(R.id.mapview); // Replace with your MapView ID
+        mapView.setTileSource(TileSourceFactory.MAPNIK); // Use Mapnik tile source (default)
+        mapView.setBuiltInZoomControls(true); // Enable zoom controls
+    }
+}
